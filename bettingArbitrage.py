@@ -1,33 +1,33 @@
 """
-Betting Arbitage Project
+Betting Arbitrage Project
 Author:  Delice Mambi-Lambu
 completed: 20/11/2023
 
 Project Aim: 
-    To create a function that can take all possiblities of 
-    an event i.e matrix and calculate if betting arbitage exists 
-    if no arbitage exists return the closest riskless decimal odds 
+    To create a function that can take all possibilities of 
+    an event i.e matrix and calculate if betting arbitrage exists 
+    if no arbitrage exists return the closest riskless decimal odds 
     we should take. 
     
 All bets should come in the form [A, draw, B] for games where a draw is a 
 possible outcome or [A, B].
 
-it is possible to have n number of possiblities for an event i.e horse race. 
+it is possible to have a number of possibilities for an event i.e. horse race. 
 for example: [x1, x2, ....., xn]
 
 bets should be packaged in a list of lists i.e. [[1,2,1.7], [1.24,1.9, 2]] 
 
-each row represents the possibities of a event from a corresponding betshop. 
+each row represents the possibility of an event from a corresponding betshop. 
 
 """
 
-def isArbitage(candidate: list) -> bool: 
+def isArbitrage(candidate: list) -> bool: 
     """
-    Useful Function for later checks for arbitage 
-    Remember for arbitage to exist 
+    Useful Function for later checks for arbitrage 
+    Remember for arbitrage to exist 
     for i in 0, ...., n :
         if sum(1/odds[i]) < 1: 
-            arbitage exisits 
+            arbitrage exists 
     
     """
     calc = 0 
@@ -37,22 +37,22 @@ def isArbitage(candidate: list) -> bool:
 
 # Sanity Check 
 cand01 = [1.2, 2.3, 1.7]
-isArbitage(cand01) # False / 1.86
+isArbitrage(cand01) # False / 1.86
 cand02 = [17.0, 6.0, 1.2]
-isArbitage(cand02) # False / 1.06
+isArbitrage(cand02) # False / 1.06
 cand03 = [5, 3.7, 2.9]
-isArbitage(cand03) # True / 0.82
+isArbitrage(cand03) # True / 0.82
 # however finding odds like this is rare!
 
 def betArbitage(bets: list) -> list: 
     """
-    In order for this to work effectively you must have mutiple bets
+    In order for this to work effectively you must have multiple bets
     The more bet shops you are using the more the chance of achieving 
-    arbitage 
+    arbitrage 
     """
     
     final = bets[0][:]
-    final.extend(list(isArbitage(bets[0])))
+    final.extend(list(isArbitrage(bets[0])))
     print(final)
     
     for i in range(1,len(bets)):
@@ -60,7 +60,7 @@ def betArbitage(bets: list) -> list:
             if bets[i][j] >  final[j]:
                 final[j] = bets[i][j]
                 
-        final[-2:] = isArbitage(final[:-2])
+        final[-2:] = isArbitrage(final[:-2])
         print(final)
         if final[-2] == True: 
             return final 
@@ -76,7 +76,7 @@ test1 = [[1.31, 3.6],
          [1.3, 3.5],
          [1.32, 3.4]]
     
-betArbitage(test1)
+betArbitrage(test1)
 # Result: [1.33, 3.6, False, 1.03]
 
 # NFL Miami Dolphins vs New York Jets - Moneyline 
@@ -86,7 +86,7 @@ test2 = [[1.22, 4.70],
          [1.22, 4.4],
          [1.21, 4.4]]
     
-betArbitage(test2)
+betArbitrage(test2)
 # Result: [1.22, 4.8, False, 1.03]
 
 # PL Man City vs Liverpool  
@@ -96,17 +96,17 @@ test3 = [[1.65, 4.33, 4.2],
          [1.67, 4.2, 4.2],
          [1.67, 4.4, 4.5]]
     
-betArbitage(test3)
+betArbitrage(test3)
 # Result: [1.67, 4.4, 4.5, False, 1.05]
 
-# PL Brentford vs Arsenal (Edited to get arbitage)
+# PL Brentford vs Arsenal (Edited to get arbitrage)
 test4 = [[4.2, 3.75, 1.75],
          [4.4, 3.6, 1.8],
          [4.2, 3.1, 1.62],
          [4.2, 3.6, 1.8],
-         [4.6, 3.9, 1.95]] # This will give arbitage 
+         [4.6, 3.9, 1.95]] # This will give arbitrage 
     
-betArbitage(test4)
+betArbitrage(test4)
 # Result: [4.6, 3.9, 1.95, True, 0.99]
 
 # PL Brentford vs Arsenal (No Arbitage)
@@ -116,6 +116,6 @@ test5 = [[4.2, 3.75, 1.75],
          [4.2, 3.6, 1.8],
          [4.6, 3.7, 1.77]] 
     
-betArbitage(test5) 
+betArbitrage(test5) 
 # Result: [4.6, 3.75, 1.8, False, 1.04]
     
